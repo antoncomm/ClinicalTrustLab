@@ -1,0 +1,3 @@
+GridDistortion:
+  p: 0.2
+  border_mode: 0

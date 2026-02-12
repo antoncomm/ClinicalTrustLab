@@ -1,0 +1,7 @@
+GaussNoise:
+  p: 0.5
+  var_limit: 
+    - 0.0001
+    - 0.005
+  mean: 0
+  per_channel: true

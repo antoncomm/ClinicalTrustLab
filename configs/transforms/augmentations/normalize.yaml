@@ -1,0 +1,10 @@
+Normalize:
+  mean:
+    - 0
+    - 0
+    - 0
+  std:
+    - 1
+    - 1
+    - 1
+  max_pixel_value: 1

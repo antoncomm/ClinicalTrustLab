@@ -1,0 +1,5 @@
+type: StepLR
+track_metric: null
+kwargs:
+  gamma: 0.5
+  step_size: 20
