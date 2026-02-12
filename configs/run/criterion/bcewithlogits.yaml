@@ -1,0 +1,2 @@
+type: BCEWithLogitsLoss
+kwargs: {}

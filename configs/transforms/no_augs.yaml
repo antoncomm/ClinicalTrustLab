@@ -1,0 +1,7 @@
+defaults:
+  - augmentations:
+    - resize
+    - normalize
+    - totensor
+
+params: {}

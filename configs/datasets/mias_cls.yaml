@@ -1,0 +1,23 @@
+mias:
+  dataset: MammographyClassification
+  dataset_dir: /home/mammography_data/input/MIAS/data
+  ann_files:
+    train: /home/mammography_data/input/MIAS/train.csv
+    valid: /home/mammography_data/input/MIAS/test.csv
+    test: /home/mammography_data/input/MIAS/test.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/MIAS/masks
+  train_kwargs:
+    p_mask: 0
+  valid_kwargs:
+    p_mask: 0
+  test_kwargs:
+    p_mask: 0  
+  ignore_classes: []
+  class_map:
+    N: 0
+    B: 0
+    M: 1
+  

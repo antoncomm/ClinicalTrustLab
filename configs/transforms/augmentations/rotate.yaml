@@ -1,0 +1,4 @@
+Rotate:
+  p: 0.5
+  interpolation: 1
+  border_mode: 2

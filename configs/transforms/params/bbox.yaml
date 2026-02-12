@@ -1,0 +1,7 @@
+arg: bbox_params
+type: BboxParams
+kwargs:
+  format: pascal_voc
+  min_visibility: 0.1
+  label_fields:
+    - class_labels

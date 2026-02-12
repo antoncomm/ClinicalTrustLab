@@ -1,0 +1,24 @@
+kau:
+  dataset: MammographyClassification
+  dataset_dir: /home/mammography_data/input/KingAbdulazizUni_dataset/data
+  ann_files:
+    train: /home/mammography_data/input/KingAbdulazizUni_dataset/train.csv
+    valid: /home/mammography_data/input/KingAbdulazizUni_dataset/test.csv
+    test: /home/mammography_data/input/KingAbdulazizUni_dataset/test.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/KingAbdulazizUni_dataset/masks
+  train_kwargs:
+    p_mask: 0
+  valid_kwargs:
+    p_mask: 0
+  test_kwargs:
+    p_mask: 0 
+  ignore_classes:
+    - BIRAD 3
+    - BIRAD 2
+  class_map:
+    BIRAD 1: 0
+    BIRAD 4: 1
+    BIRAD 5: 1

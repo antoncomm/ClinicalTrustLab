@@ -1,0 +1,27 @@
+inbreast:
+  dataset: MammographyClassification
+  dataset_dir: /home/mammography_data/input/INBreast/data
+  ann_files:
+    train: /home/mammography_data/input/INBreast/train.csv
+    valid: /home/mammography_data/input/INBreast/valid.csv
+    test: /home/mammography_data/input/INBreast/valid.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/INBreast/masks
+  train_kwargs:
+    p_mask: 0
+  valid_kwargs:
+    p_mask: 0
+  test_kwargs:
+    p_mask: 0
+  ignore_classes: 
+    - "3"
+    - "4a"
+    - "4b"
+    - "4c"
+  class_map:
+    "1": 0
+    "2": 0
+    "5": 1
+    "6": 1

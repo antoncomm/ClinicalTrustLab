@@ -1,0 +1,7 @@
+runner: SimpleClassificationRunner
+model_name: EfficientNet
+model_kwargs:
+  num_classes: 1
+weights_path: null
+thresholds:
+  cls: 0.5

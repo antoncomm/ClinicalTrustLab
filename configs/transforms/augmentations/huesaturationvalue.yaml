@@ -1,0 +1,5 @@
+HueSaturationValue:
+  p: 0.5
+  hue_shift_limit: 0
+  sat_shift_limit: 0
+  val_shift_limit: 0.1

@@ -1,0 +1,3 @@
+CoarseDropout:
+  p: 0.2
+  max_holes: 20
