@@ -1,0 +1,10 @@
+Affine:
+  p: 0.35
+  translate_percent: [-0.0625, 0.0625]
+  scale: [0.9, 1.1]
+  rotate: [-45, 45]
+  shear: 0
+  border_mode: 0
+  fill: 0
+  keep_ratio: True  # disable independent axis scaling
+

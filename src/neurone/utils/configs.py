@@ -384,7 +384,7 @@ def compose_transforms(transforms):
     # pylint: disable=possibly-unused-variable
     from albumentations import HueSaturationValue, GaussNoise, Rotate
     from albumentations import ShiftScaleRotate, Perspective, HorizontalFlip
-    from albumentations import VerticalFlip, RandomCrop, Resize, Compose
+    from albumentations import Affine, VerticalFlip, RandomCrop, Resize, Compose
     from albumentations import Sharpen, AdvancedBlur, CLAHE, GridDistortion
     from albumentations import CenterCrop, BboxParams, Normalize, GridDropout
     from albumentations import RandomBrightnessContrast, CoarseDropout, PixelDropout

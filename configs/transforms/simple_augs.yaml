@@ -6,7 +6,7 @@ defaults:
     - horizontalflip
     - huesaturationvalue
     - sharpen
-    - shiftscalerotate
+    - affine
     - griddropout
     - griddistortion
     - pixeldropout
