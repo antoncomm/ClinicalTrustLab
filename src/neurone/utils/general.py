@@ -245,51 +245,6 @@ def is_background_batch(image, mean=225, std=14):
     ).bool()
 
 
-def load_image(image_path: str, windowing: bool = False):
-    """
-    Load an image from a file using OpenCV or DICOM format.
-
-    Parameters
-    ----------
-    image_path:
-        The path to the image file.
-    windowing:
-        The flag to apply windowing to DICOM images.
-
-    Returns
-    -------
-    numpy.ndarray:
-        The loaded image as a NumPy array.
-        If the image is in DICOM format, it is normalized with values in the range [0, 1]
-        and converted to RGB and normalized.
-        If the image is in a common image format (e.g., JPEG, PNG), it is loaded and
-        color channels are rearranged to RGB.
-
-    Note
-    ----
-    This function supports loading both standard image formats and DICOM medical
-    images. For DICOM images, it assumes that the pixel data is in Hounsfield units
-    and normalizes it to the [0, 1] range.
-    """
-
-    if image_path.endswith(".dcm") or image_path.endswith(".dicom"):
-        dcm = dicomsdl.open(image_path)
-        ptmint = dcm.PhotometricInterpretation
-        image = dcm.pixelData()
-        if windowing:
-            image = apply_windowing(image, dcm)
-        image -= image.min()
-        image /= image.max()
-        if ptmint == "MONOCHROME1":
-            image = 1 - image
-        image = np.stack((image,) * 3, axis=-1)  # convert to rgb
-    else:
-        image = cv2.imread(image_path).astype(np.float32)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        image /= 255.0
-    return image
-
-
 def get_files_pathes(path, pattern, istype="file"):
     """
     Get pathes from input directory.

@@ -7,7 +7,8 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-from neurone.utils.general import get_kwarg, load_image
+from neurone.utils.general import get_kwarg
+from neurone.data.utils import load_image
 from neurone.train.augmentations import mask_crop
 
 
@@ -82,7 +83,6 @@ class BaseMammographyDataset(BaseDataset):
         **kwargs,
     ) -> None:
         super().__init__(root, annfile, transforms, ignore_classes, class_map, **kwargs)
-        self.windowing = kwargs.get("windowing", False)
         self.mask_dir = kwargs.get("mask_dir", None)
         self.p_mask = kwargs.get(
             "p_mask", 0
@@ -93,7 +93,7 @@ class BaseMammographyDataset(BaseDataset):
         raise NotImplementedError
 
     def _load_image(self, path: str) -> np.array:
-        image = load_image(path, self.windowing)
+        image = load_image(path)
         if self.mask_dir is not None:
             path_to_mask = path.replace(self.root, self.mask_dir)
             root, _ = os.path.splitext(path_to_mask)  # root, ext
