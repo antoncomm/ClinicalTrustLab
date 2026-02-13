@@ -44,12 +44,9 @@ graph LR
     BaseProcess[base] --> RunProcess[run]
     RunProcess --> InternalRun[_run]
     InternalRun --> RunLocal[_run_local]
-    RunLocal --> OnKFoldStart[on_kfold_start]
-    RunLocal --> RunKFold[run_kfold]
-    RunLocal --> OnKFoldEnd[on_kfold_end]
-    RunKFold --> OnExperimentStart[on_experiment_start]
-    RunKFold --> RunExperiment[run_experiment]
-    RunKFold --> OnExperimentEnd[on_experiment_end]
+    RunLocal --> OnExperimentStart[on_experiment_start]
+    RunLocal --> RunExperiment[run_experiment]
+    RunLocal --> OnExperimentEnd[on_experiment_end]
     RunExperiment --> OnEpochStart[on_epoch_start]
     RunExperiment --> RunEpoch[run_epoch]
     RunExperiment --> OnEpochEnd[on_epoch_end]
@@ -61,7 +58,6 @@ graph LR
     RunDataset --> OnBatchEnd[on_batch_end]
     RunBatch --> NotImplementedError[NotImplementedError]
     OnExperimentEnd --> SaveBestMetrics[save_best_metrics]
-    OnKFoldEnd --> SummarizeKFold[summarize_kfold]
 ```
 
 ## Dataset hierarchy

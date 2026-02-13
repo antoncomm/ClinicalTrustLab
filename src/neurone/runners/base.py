@@ -35,14 +35,6 @@ class Base(IExperiment):
         self.engine = engine
         self.config = config
         self.mode = self.config["mode"]
-        self.kfold = self.config["run"]["kfold"]
-        self.fold_i = ""  # os.path.join("dir1", "", "dir2") -> dir1/dir2
-
-        if self.kfold["use"] and self.config["mode"] != "train":
-            self.exception = ValueError(
-                f"If kfold.use is True, mode must be 'train', not {self.mode}!"
-            )
-            self._run_event("on_exception")
 
         if "save_console_logs" in self.config["run"].keys():
             self.save_console_logs = self.config["run"]["save_console_logs"]
@@ -153,21 +145,17 @@ class Base(IExperiment):
         self.path_to_checkpoints_dir = os.path.join(
             self.save_dir,
             self.experiment_name,
-            self.fold_i,
             self.checkpoints_dir,
         )
 
         makedir_overwrite(
-            os.path.join(
-                self.save_dir, self.experiment_name, self.fold_i, self.project_dir
-            ),
+            os.path.join(self.save_dir, self.experiment_name, self.project_dir),
             self.overwrite,
         )
         makedir_overwrite(
             os.path.join(
                 self.save_dir,
                 self.experiment_name,
-                self.fold_i,
                 self.graphs_kwargs["dir_to_save"],
             ),
             self.overwrite,
@@ -199,9 +187,7 @@ class Base(IExperiment):
             self._setup_model()
             self._setup_train()
         self.writer = SummaryWriter(
-            os.path.join(
-                self.save_dir, self.experiment_name, self.fold_i, self.project_dir
-            )
+            os.path.join(self.save_dir, self.experiment_name, self.project_dir)
         )
         if self.mode == "test":
             self.num_epochs = 1
@@ -290,35 +276,11 @@ class Base(IExperiment):
             self.run_dataset()
             self._run_event("on_dataset_end")
 
-    def on_kfold_start(self, exp: "IExperiment"):
-        self.path_kfold_summary = os.path.join(
-            self.save_dir, self.experiment_name, "kfold_summary.csv"
-        )
-
-    def on_kfold_end(self, exp: "IExperiment") -> None:
-        """Summarize kfold"""
-        self._kfold_summarize_logs()
-        self._log_console_kfold()
-
-    def run_kfold(self) -> None:
-        for i in range(self.kfold["num_folds"]):
-            self.fold_i = f"fold_{i}"
-            self.config["run"]["kfold"]["fold_i"] = i
-            self._run_event("on_experiment_start")
-            self.run_experiment()
-            self._run_event("on_experiment_end")
-
     def _run_local(self, local_rank: int = -1, world_size: int = 1) -> None:
         self._local_rank, self._world_size = local_rank, world_size
-
-        if self.kfold["use"] and self.mode == "train":
-            self._run_event("on_kfold_start")
-            self.run_kfold()
-            self._run_event("on_kfold_end")
-        else:
-            self._run_event("on_experiment_start")
-            self.run_experiment()
-            self._run_event("on_experiment_end")
+        self._run_event("on_experiment_start")
+        self.run_experiment()
+        self._run_event("on_experiment_end")
 
     def _run(self):
         self.engine.spawn(self._run_local)
@@ -336,7 +298,6 @@ class Base(IExperiment):
         new_best_chekpoint_path = os.path.join(
             self.save_dir,
             self.experiment_name,
-            self.fold_i,
             f"epoch_{self.best_epoch}.pth",
         )
         sh.copy(best_chekpoint_path, new_best_chekpoint_path)
@@ -348,9 +309,7 @@ class Base(IExperiment):
     def _save_config(self):
         save_config(
             self.config,
-            os.path.join(
-                self.save_dir, self.experiment_name, self.fold_i, "config.yaml"
-            ),
+            os.path.join(self.save_dir, self.experiment_name, "config.yaml"),
             self.overwrite,
         )
 
@@ -493,7 +452,7 @@ class Base(IExperiment):
 
     def _save_logs(self):
         self.path_to_logs_csv = os.path.join(
-            self.save_dir, self.experiment_name, self.fold_i, "logs.csv"
+            self.save_dir, self.experiment_name, "logs.csv"
         )
 
         metrics = ["loss", "metrics"]
@@ -529,77 +488,3 @@ class Base(IExperiment):
         row_values = dict(zip(names, values))
         pd_log.loc[len(pd_log)] = row_values
         pd_log.to_csv(self.path_to_logs_csv)
-
-    def _log_console_kfold(self):
-        """fold_0 (n): n - number of best_step in fold_0
-        +-------------------+--------------+--------------+--------+--------+
-        |                   |   fold_0 (1) |   fold_1 (1) |   mean |    std |
-        |-------------------+--------------+--------------+--------+--------|
-        | train_loss        |       0.6356 |       0.6187 | 0.6271 | 0.0084 |
-        | valid_loss        |       0.6160 |       0.5532 | 0.5846 | 0.0314 |
-        | train_roc_auc*    |       0.5928 |       0.6038 | 0.5983 | 0.0055 |
-        | valid_roc_auc*    |       0.8204 |       0.6106 | 0.7155 | 0.1049 |
-        | train_f1          |       0.8850 |       0.0456 | 0.4653 | 0.4197 |
-        | valid_f1          |       0.7718 |       0.9639 | 0.8679 | 0.0960 |
-        | train_specificity |       0.2000 |       1.0000 | 0.6000 | 0.4000 |
-        | valid_specificity |       1.0000 |       0.4000 | 0.7000 | 0.3000 |
-        | train_precision   |       0.9895 |       1.0000 | 0.9948 | 0.0052 |
-        | valid_precision   |       1.0000 |       0.9932 | 0.9966 | 0.0034 |
-        | train_recall      |       0.8004 |       0.0234 | 0.4119 | 0.3885 |
-        | valid_recall      |       0.6285 |       0.9363 | 0.7824 | 0.1539 |
-        | train_accuracy    |       0.7941 |       0.0336 | 0.4139 | 0.3803 |
-        | valid_accuracy    |       0.6324 |       0.9307 | 0.7815 | 0.1492 |
-        +-------------------+--------------+--------------+--------+--------+
-        """
-        kfold_summary = pd.read_csv(self.path_kfold_summary, index_col=0)
-        kfold_summary = kfold_summary.T
-        print(tabulate(kfold_summary, headers="keys", tablefmt="psql", floatfmt=".4f"))
-
-    def _kfold_summarize_logs(self):
-        """
-        Summarize logs from kfold cross-validation and write result and statistics to file
-
-        Args
-        - config: dict
-            Config file with all the information about the experiment
-        """
-
-        # create list of paths to logs
-        n_folds = self.config["run"]["kfold"]["num_folds"]
-        list_of_paths = [
-            os.path.join(
-                self.save_dir,
-                self.experiment_name,
-                f"fold_{i}",
-                "logs.csv",
-            )
-            for i in range(n_folds)
-        ]
-
-        best_rows = []
-        best_row_indices = []
-        for i, path in enumerate(list_of_paths):
-            if not os.path.exists(path):
-                raise ValueError(f"Log file doesn't exist at {path}")
-            # compare logs and write results to file
-
-            # best, mean, std
-            df_fold = pd.read_csv(path, index_col=0)
-            best_row_index = df_fold.to_numpy()[:, 3].argmax()  # 3 - valid prime metric
-            best_rows.append(df_fold.loc[best_row_index])
-            best_row_indices.append(best_row_index + 1)
-
-        indexes = [
-            f"fold_{i} ({best_row_indices[i]})" for i in range(len(list_of_paths))
-        ]
-        names = df_fold.columns
-        kfold_df = pd.DataFrame(columns=names, data=best_rows, index=indexes)
-
-        mean = np.mean(best_rows, axis=0)
-        mean_dict = {name: value for name, value in zip(names, mean)}
-        kfold_df.loc["mean"] = mean_dict
-        std = np.std(best_rows, axis=0)
-        std_dict = {name: value for name, value in zip(names, std)}
-        kfold_df.loc["std"] = std_dict
-
-        kfold_df.to_csv(self.path_kfold_summary)

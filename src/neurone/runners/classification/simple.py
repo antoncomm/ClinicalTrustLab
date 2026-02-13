@@ -124,7 +124,6 @@ class SimpleClassificationRunner(Base):
             path_to_save=os.path.join(
                 self.save_dir,
                 self.experiment_name,
-                self.fold_i,
                 self.graphs_kwargs["dir_to_save"],
                 "pr_curve_" + f"epoch_{self.epoch_step}" + f"{ext}",
             ),
@@ -136,7 +135,6 @@ class SimpleClassificationRunner(Base):
             path_to_save=os.path.join(
                 self.save_dir,
                 self.experiment_name,
-                self.fold_i,
                 self.graphs_kwargs["dir_to_save"],
                 "roc_curve_" + f"epoch_{self.epoch_step}" + f"{ext}",
             ),
@@ -154,7 +152,6 @@ class SimpleClassificationRunner(Base):
             path_to_save=os.path.join(
                 self.save_dir,
                 self.experiment_name,
-                self.fold_i,
                 self.graphs_kwargs["dir_to_save"],
                 "output_distribution_" + f"epoch_{self.epoch_step}" + f"{ext}",
             ),
@@ -166,7 +163,6 @@ class SimpleClassificationRunner(Base):
             path_to_save=os.path.join(
                 self.save_dir,
                 self.experiment_name,
-                self.fold_i,
                 self.graphs_kwargs["dir_to_save"],
                 "f1_curve_" + f"epoch_{self.epoch_step}" + f"{ext}",
             ),

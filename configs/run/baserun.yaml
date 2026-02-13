@@ -11,11 +11,6 @@ experiment_name: experiment
 checkpoints_dir: checkpoints
 save_checkpoints: True
 project_dir: logs
-kfold: 
-  use: false
-  num_folds: 3
-  label: null
-  groups: null
 graphs:
   dir_to_save: graphs
   extension: .pdf

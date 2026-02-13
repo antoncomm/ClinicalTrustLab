@@ -37,23 +37,8 @@ def setup_data(config: Dict) -> Dict[str, Dataset]:
         if test is not None:
             test_datasets.append(test)
 
-    if config["run"]["kfold"]["use"]:
-        train_val_dataset = BaseConcatDataset([*train_datasets, *valid_datasets])
-        datasets["train"], datasets["valid"] = make_kfold_datasets(
-            config, train_val_dataset
-        )
-        # resetup transforms
-        for dataset in datasets["train"].dataset.datasets:
-            dataset.transforms = deepcopy(train_datasets[0].transforms)
-        for dataset in datasets["valid"].dataset.datasets:
-            dataset.transforms = deepcopy(test_datasets[0].transforms)
-    else:
-        datasets["train"] = (
-            BaseConcatDataset(train_datasets) if train_datasets else None
-        )
-        datasets["valid"] = (
-            BaseConcatDataset(valid_datasets) if valid_datasets else None
-        )
+    datasets["train"] = BaseConcatDataset(train_datasets) if train_datasets else None
+    datasets["valid"] = BaseConcatDataset(valid_datasets) if valid_datasets else None
     datasets["test"] = BaseConcatDataset(test_datasets) if test_datasets else None
 
     return datasets
