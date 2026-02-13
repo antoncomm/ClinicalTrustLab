@@ -4,7 +4,7 @@ import numpy as np
 import albumentations as A
 
 # neurone imports
-from neurone.utils.general import load_image
+from neurone.data.utils import load_image
 
 
 def mask_crop(inputs: dict, path_to_mask: str, p: float = 0.5) -> dict:
