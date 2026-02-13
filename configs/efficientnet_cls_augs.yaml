@@ -15,12 +15,12 @@ defaults:
 transforms:
   augmentations:
     Normalize:
-      mean: [0.1198, 0.1198, 0.1198]
-      std: [0.2153, 0.2153, 0.2153]
+      mean: [0.1216, 0.1216, 0.1216]
+      std: [0.2300, 0.2300, 0.2300]
 
 
 run:
-  num_epochs: 50
+  num_epochs: 65
   batch_size: 90
   workers: 16
   metrics_shared_kwargs:
@@ -33,4 +33,4 @@ run:
     track_metric: null
     kwargs:
       gamma: 0.5
-      step_size: 30
+      step_size: 20

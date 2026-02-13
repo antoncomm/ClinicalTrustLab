@@ -80,10 +80,10 @@ def load_pydicom(dicom_path: str):
     if dicom_path.startswith("s3://"):
         image_bytes = load_file_bytes(dicom_path)
         dicom_ds = pydicom.dcmread(image_bytes, force=True)  # Read DICOM from bytes
-
-    dicom_ds = pydicom.dcmread(
-        dicom_path, force=True
-    )  # Read DICOM directly from file path
+    else:
+        dicom_ds = pydicom.dcmread(
+            dicom_path, force=True
+        )  # Read DICOM directly from file path
 
     return dicom_ds
 
