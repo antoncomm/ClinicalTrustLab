@@ -1,0 +1,34 @@
+cbis:
+  dataset: BadNetPoisonMammographyClassification
+  dataset_dir: /home/mammography_data/input/CBIS_DDSM/data
+  ann_files:
+    train: /home/mammography_data/input/CBIS_DDSM/train.csv
+    valid: /home/mammography_data/input/CBIS_DDSM/test.csv
+    test: /home/mammography_data/input/CBIS_DDSM/test.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/CBIS_DDSM/masks
+  train_kwargs:
+    p_mask: 0
+    p: 0.05
+    patch_size: 0.1
+    value: 0
+    dataset_type: train
+  valid_kwargs:
+    p_mask: 0
+    p: 0.05
+    patch_size: 0.1
+    value: 0
+    dataset_type: valid
+  test_kwargs:
+    p_mask: 0
+    p: 0.05
+    patch_size: 0.1
+    value: 0
+    dataset_type: test
+  ignore_classes: []
+  class_map:
+    BENIGN_WITHOUT_CALLBACK: 0
+    BENIGN: 0
+    MALIGNANT: 1

@@ -4,3 +4,4 @@
 .idea/
 *.sh
 exper*/
+.venv/
