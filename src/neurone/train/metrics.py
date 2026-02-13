@@ -182,12 +182,36 @@ class Metric:
         Returns:
             Formatted predictions and references.
         """
-        predictions = self.do_format(predictions["cls_logits"], True, True, "cls")
+        if self.task == "binary":
+
+            if (
+                predictions["cls_logits"].shape[-1] == 1
+                and predictions["cls_logits"].shape != references["labels"].shape
+            ):
+                predictions["cls_logits"] = predictions["cls_logits"].squeeze(
+                    -1
+                )  # rm last dim, converting model output into binary cls format
+
+            predictions = self.do_format(
+                predictions["cls_logits"],
+                activation_flag=True,
+                threshold_flag=True,
+                threshold_type="cls",
+            )
+        elif self.task == "multiclass":
+            predictions = self.do_format(
+                predictions["cls_logits"],
+                activation_flag=True,
+                threshold_flag=False,
+                threshold_type=None,
+            )
+        else:
+            raise ValueError(f"Unsupported task {self.task}")
+
         references = references["labels"]
 
         if self.task == "multiclass":
             predictions = predictions.argmax(1)
-            references = references.argmax(1)
 
         return predictions, references
 
@@ -267,9 +291,5 @@ class Metric:
         """
         predictions = self.do_format(predictions["cls_logits"], True, False, "cls")
         references = references["labels"]
-
-        if self.task == "multiclass":
-            predictions = predictions.argmax(1)
-            references = references.argmax(1)
 
         return predictions, references
