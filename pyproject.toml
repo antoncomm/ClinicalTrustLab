@@ -39,7 +39,8 @@ dependencies = [
     "seaborn",
     "torchmetrics",
     "hydra-core",
-    "adversarial-robustness-toolbox"
+    "adversarial-robustness-toolbox",
+    "boto3"
 ]
 
 [tool.pytest.ini_options]
