@@ -81,6 +81,8 @@ def define_criterion(criterion_config):
         return None
     elif criterion_config["type"] == "Focal":
         criterion = FocalLoss(**criterion_config["kwargs"])
+    elif criterion_config["type"] == "CrossEntropy":
+        criterion = torch.nn.CrossEntropyLoss(**criterion_config["kwargs"])
     elif criterion_config["type"] == "Dice":
         criterion = smp.losses.DiceLoss(**criterion_config["kwargs"])
     elif criterion_config["type"] == "GaussianFocal":
