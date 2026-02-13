@@ -3,59 +3,25 @@ import torch.nn as nn
 from torchvision.ops import sigmoid_focal_loss
 
 
-class WeightedLoss(nn.Module):
-
-    def __init__(self, class_weights=(1.0, 1.0, 1.0), normalize_weights=False):
-        super(WeightedLoss, self).__init__()
-        weights_torched = torch.tensor(class_weights, requires_grad=False).unsqueeze(0)
-        if normalize_weights:
-            weights_torched /= weights_torched.sum()
-        weights_torched = weights_torched.contiguous()
-
-        self.weights = nn.Parameter(weights_torched, requires_grad=False)
-
-    def forward(self, heatmaps_gt, heatmaps_pred):
-        raise NotImplementedError()
-
-    def to(self, device):
-        self.weights.to(device)
-        return super().to(device)
-
-    def __init__(self, class_weights, normalize_weights=False, delta=1.0):
-        super(HeatmapHuber, self).__init__(class_weights, normalize_weights)
-        self.delta = delta
-        self.c0 = nn.Parameter(torch.tensor(0.5), requires_grad=False)
-        self.c1 = nn.Parameter(torch.tensor(0.5 * delta), requires_grad=False)
-        self.c2 = nn.Parameter(torch.tensor(0.5 * delta * delta), requires_grad=False)
-
-    def forward(self, heatmaps_gt, heatmaps_pred):
-        diffs = torch.abs(heatmaps_gt - heatmaps_pred)
-        squares = torch.mul(self.c0, torch.pow(heatmaps_gt - heatmaps_pred, 2))
-        linears = torch.add(torch.mul(self.c1, diffs), self.c2)
-        hubers = torch.where(diffs < self.delta, squares, linears)
-        means = hubers.mean(axis=(2, 3)) * self.weights
-        return means.mean()
-
-
-class FocalLoss(WeightedLoss):
-
-    def __init__(
-        self,
-        alpha=2.0,
-        gamma=4.0,
-        reduction="none",
-        class_weights=(1, 1),
-        normalize_weights=False,
-    ):
-        super().__init__(class_weights, normalize_weights)
+class FocalLoss(nn.Module):
+    def __init__(self, alpha=0.5, gamma=4.0, reduction="none"):
+        super().__init__()
         self.alpha = alpha
         self.gamma = gamma
         self.reduction = reduction
 
-    def forward(self, labels_pd, labels_gt):
+    def forward(self, inputs, targets):
+        # Convert targets to float32
+        targets = targets.to(torch.float32)
+
+        # Add an extra dimension to targets if shapes don't match for binary classification
+        if inputs.shape != targets.shape:
+            targets = targets.unsqueeze(-1)
+
+        # Compute focal loss
         return sigmoid_focal_loss(
-            labels_pd,
-            labels_gt,
+            inputs=inputs,
+            targets=targets,
             alpha=self.alpha,
             gamma=self.gamma,
             reduction=self.reduction,
