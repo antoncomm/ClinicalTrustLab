@@ -42,7 +42,7 @@ transforms:
 
 run:
   num_epochs: 50
-  batch_size: 90
+  batch_size: 48
   workers: 16
 
   criterion:
