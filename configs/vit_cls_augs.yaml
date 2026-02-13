@@ -1,0 +1,39 @@
+mode: train
+defaults:
+  - model: vit
+  - datasets:
+      - inbreast_cls
+      - vindr_cls
+      - cmmd_cls
+      - cbis_cls
+  - transforms: simple_augs
+
+  - run: classification
+  - _self_
+
+
+transforms:
+  augmentations:
+    Resize:
+      height: 224
+      width: 224
+    Normalize:
+      mean: [0.1198, 0.1198, 0.1198]
+      std: [0.2153, 0.2153, 0.2153]
+
+
+run:
+  num_epochs: 50
+  batch_size: 90
+  workers: 16
+  metrics_shared_kwargs:
+    task: binary
+  optimizer:
+    kwargs:
+      lr: 0.0001
+  scheduler:
+    type: StepLR
+    track_metric: null
+    kwargs:
+      gamma: 0.5
+      step_size: 30

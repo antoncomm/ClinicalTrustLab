@@ -1,0 +1,9 @@
+runner: SimpleClassificationRunner
+model_name: HFClassificationModel
+model_kwargs:
+  class_name: ViTForImageClassification
+  pretrained_model_name_or_path: google/vit-base-patch16-224
+  num_labels: 1
+weights_path: null
+thresholds:
+  cls: 0.5
