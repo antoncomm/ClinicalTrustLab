@@ -1,0 +1,7 @@
+runner: MultiClassificationRunner
+model_name: ResNet
+model_kwargs:
+  num_classes: 10
+weights_path: /home/a.komarov/mamm_ijcai/weights/resnet.pth
+thresholds:
+  cls: 0.5

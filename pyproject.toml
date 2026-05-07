@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctl"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "gradio",
+    "GitPython",
+    "torch",
+    "opencv-python",
+    "torchvision",
+    "transformers",
+    "animus @ git+https://github.com/Scitator/animus.git@main",
+    "segmentation_models_pytorch",
+    "albumentations",
+    "accelerate",
+    "packaging",
+    "bayesian-optimization",
+    "numpy",
+    "tqdm",
+    "plotly",
+    "matplotlib",
+    "scikit-learn",
+    "pycocotools",
+    "bidict",
+    "funcy",
+    "ray",
+    "starlette",
+    "tensorboard",
+    "pandas",
+    "pytest",
+    "lion-pytorch",
+    "tabulate",
+    "dicomsdl",
+    "pydicom",
+    "grad-cam",
+    "seaborn",
+    "torchmetrics",
+    "hydra-core",
+    "adversarial-robustness-toolbox",
+    "boto3"
+]
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::DeprecationWarning"]

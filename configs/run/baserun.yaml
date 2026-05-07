@@ -1,0 +1,36 @@
+batch_size: 16
+num_epochs: 100
+log_every: 1
+verbose: True
+seed: 42
+workers: 8
+tracker: tensorboard
+checkpoint_every: 5
+save_dir: ./experiments
+experiment_name: experiment
+checkpoints_dir: checkpoints
+save_checkpoints: True
+project_dir: logs
+graphs:
+  dir_to_save: graphs
+  extension: .pdf
+early_stopping:
+  use: false
+  track_metric: loss
+  threshold: 1.e-4 # Threshold for measuring the new optimum, to only focus on significant changes.
+  patience: 10 # Number of epochs with no improvement after which experiments will be terminated.
+overwrite: False
+save_console_logs: True
+interpolation: 1
+deterministic: False
+engine_name: cpu
+cuda_visible_devices: null
+criterion: null
+metrics_dir: metrics
+metrics: null
+prime_metric: 0
+optimizer: null
+git:
+  branch: origin/dev
+scheduler:
+  type: null

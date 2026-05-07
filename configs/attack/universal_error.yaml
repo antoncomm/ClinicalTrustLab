@@ -1,0 +1,4 @@
+type: UniversalNoiseAdd
+attack_runner: AttackMultiClassificationRunner
+attack_params:
+  eps: 0.05

@@ -1,0 +1,6 @@
+attack_dataset: BadNetPoisonMammographyClassification
+attack_params:
+  p: 0.1
+  patch_size: 0.1
+  value: 0
+  

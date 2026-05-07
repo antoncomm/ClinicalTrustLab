@@ -1,0 +1,7 @@
+attack_dataset: WaNetPoisonMammographyClassification
+attack_params:
+  p: 0.1
+  p_noise: 0.1
+  value: 0
+  k: 0.5
+  s: 4

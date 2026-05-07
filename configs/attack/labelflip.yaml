@@ -1,0 +1,4 @@
+attack_dataset: LabelFlipMammographyClassification
+attack_params:
+  p: 0.1
+  num_classes: 10

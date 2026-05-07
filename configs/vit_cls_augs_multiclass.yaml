@@ -1,0 +1,79 @@
+mode: train
+defaults:
+  - model: vit
+  - datasets:
+      - vindr_cls
+      - inbreast_cls
+  - transforms: simple_augs
+
+  - run: classification
+  - _self_
+
+
+model:
+  runner: MultiClassificationRunner
+  model_kwargs:
+    num_labels: 3
+
+
+datasets:
+  vindr:
+    class_map:
+      BI-RADS 1: 0
+      BI-RADS 2: 1
+      BI-RADS 5: 2
+  inbreast:
+    class_map:
+      '1': 0
+      '2': 1
+      '5': 2
+      '6': 2
+
+
+transforms:
+  augmentations:
+    Resize:
+      height: 224
+      width: 224
+    Normalize:
+      mean: [0.1198, 0.1198, 0.1198]
+      std: [0.2153, 0.2153, 0.2153]
+
+
+run:
+  num_epochs: 50
+  batch_size: 48
+  workers: 16
+
+  criterion:
+    type: CrossEntropy
+    kwargs: {}
+
+  metrics:
+    F1Score:
+      kwargs:
+        average: macro
+    Specificity:
+      kwargs:
+        average: macro
+    Precision:
+      kwargs:
+        average: macro
+    Recall:
+      kwargs:
+        average: macro
+
+  metrics_shared_kwargs:
+    task: multiclass
+    num_classes: 3
+
+  optimizer:
+    kwargs:
+      lr: 0.0001
+
+  scheduler:
+    type: StepLR
+    track_metric: null
+    kwargs:
+      gamma: 0.5
+      step_size: 30

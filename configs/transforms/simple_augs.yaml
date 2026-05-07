@@ -1,0 +1,16 @@
+defaults:
+  - augmentations:
+    - resize
+    - advancedblur
+    - gaussnoise
+    - horizontalflip
+    - huesaturationvalue
+    - sharpen
+    - affine
+    - griddropout
+    - griddistortion
+    - pixeldropout
+    - normalize
+    - totensor
+
+params: {}

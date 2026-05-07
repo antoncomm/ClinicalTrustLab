@@ -1,0 +1,9 @@
+type: PGDAttack
+attack_runner: AttackMultiClassificationRunner
+attack_params:
+  nb_classes: 10
+  max_iter: 5
+  eps: 0.05
+  eps_step: 0.01
+  verbose: False
+  is_color: True

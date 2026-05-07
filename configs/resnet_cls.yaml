@@ -1,0 +1,54 @@
+mode: test
+defaults:
+  - model: resnet
+  - datasets:
+      - cifar
+  - transforms: no_augs
+
+  - run: classification
+  - attack: square
+  - _self_
+
+transforms:
+  augmentations:
+    Resize:
+      height: 32
+      width: 32
+
+run:
+  num_epochs: 1
+  batch_size: 40
+  workers: 16
+
+  criterion:
+    type: CrossEntropy
+    kwargs: {}
+
+  metrics:
+    F1Score:
+      kwargs:
+        average: macro
+    Specificity:
+      kwargs:
+        average: macro
+    Precision:
+      kwargs:
+        average: macro
+    Recall:
+      kwargs:
+        average: macro
+
+  metrics_shared_kwargs:
+    task: multiclass
+    num_classes: 10
+
+  optimizer:
+    kwargs:
+      lr: 0.0001
+
+  scheduler:
+    type: StepLR
+    track_metric: null
+    kwargs:
+      gamma: 0.5
+      step_size: 30

@@ -1,0 +1,10 @@
+GaussNoise:
+  p: 0.5
+  std_range:
+    - 0.01
+    - 0.07
+  mean_range:
+    - 0.0
+    - 0.0
+  noise_scale_factor: 1
+  per_channel: false  # change for rgb images

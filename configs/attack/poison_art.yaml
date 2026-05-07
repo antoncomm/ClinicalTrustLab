@@ -1,0 +1,3 @@
+type: PoisonARTAttack
+attack_runner: AttackClassificationRunner
+attack_params:

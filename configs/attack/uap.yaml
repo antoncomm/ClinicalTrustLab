@@ -1,0 +1,7 @@
+type: UAPAttack
+attack_runner: AttackClassificationRunner
+attack_params:
+  eps: 0.05
+  lr: 0.03
+  max_iter: 10
+  is_color: True

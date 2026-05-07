@@ -1,0 +1,22 @@
+cbis:
+  dataset: MammographyClassification
+  dataset_dir: s3://cbisddsm/data/
+  ann_files:
+    train: /home/a.komarov/data/mammography/cbisddsm/train_splitted.csv
+    #valid: /home/a.komarov/data/mammography/cbisddsm/valid_splitted.csv
+    test: /home/a.komarov/data/mammography/cbisddsm/test.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/CBIS_DDSM/masks
+  train_kwargs:
+    p_mask: 0
+  valid_kwargs:
+    p_mask: 0
+  test_kwargs:
+    p_mask: 0
+  ignore_classes: []
+  class_map:
+    BENIGN_WITHOUT_CALLBACK: 0
+    BENIGN: 0
+    MALIGNANT: 1

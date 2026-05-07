@@ -1,0 +1,7 @@
+is_check_shapes: False
+additional_targets: {
+  "image": "image", 
+  "image1": "image",
+  "image2": "image",
+  "image3": "image",
+}  

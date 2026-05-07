@@ -1,0 +1,6 @@
+type: SquareAttack
+attack_runner: AttackClassificationRunner
+attack_params:
+  eps: 0.05
+  nb_classes: 2
+  is_color: True

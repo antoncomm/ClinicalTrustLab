@@ -1,0 +1,8 @@
+type: CWAttack
+attack_runner: AttackClassificationRunner
+attack_params:
+  c: 0.1
+  kappa: 0
+  lr: 0.01
+  max_iter: 10 
+  num_classes: 2

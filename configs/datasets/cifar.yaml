@@ -1,0 +1,13 @@
+cmmd:
+  dataset: CifarDataset
+  dataset_dir: /home/a.komarov/data/CIFAR10
+  ann_files:
+    #train: /home/a.komarov/data/mammography/embed/test_crop.csv
+    #valid: /home/a.komarov/data/mammography/embed/test_crop.csv
+    test:  /home/a.komarov/data/mammography/embed/test_crop.csv
+  kwargs: {}
+  train_kwargs: {}
+  valid_kwargs: {}
+  test_kwargs: {}
+  ignore_classes: []
+  class_map: {}

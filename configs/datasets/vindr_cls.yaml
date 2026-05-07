@@ -1,0 +1,24 @@
+vindr:
+  dataset: MammographyClassification
+  dataset_dir: s3://vindr/data/
+  ann_files:
+    train: /home/a.komarov/data/mammography/vindr/train_splitted.csv
+    #valid: /home/a.komarov/data/mammography/vindr/valid_splitted.csv
+    test: /home/a.komarov/data/mammography/vindr/test.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/vindr/masks
+  train_kwargs:
+    p_mask: 0
+  valid_kwargs:
+    p_mask: 0
+  test_kwargs:
+    p_mask: 0
+  ignore_classes:
+    - BI-RADS 3
+    - BI-RADS 4
+  class_map:
+    BI-RADS 1: 0
+    BI-RADS 2: 0
+    BI-RADS 5: 1

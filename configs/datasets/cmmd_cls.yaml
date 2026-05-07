@@ -1,0 +1,21 @@
+cmmd:
+  dataset: MammographyClassification
+  dataset_dir: s3://cmmd/data/
+  ann_files:
+    train: /home/a.komarov/data/mammography/cmmd/train_splitted.csv
+    #valid: /home/a.komarov/data/mammography/cmmd/valid_splitted.csv
+    test: /home/a.komarov/data/mammography/cmmd/test.csv
+  kwargs:
+    ratio: 1
+    windowing: false
+    mask_dir: /home/mammography_data/input/TheChineseMammographyDatabase/masks
+  train_kwargs:
+    p_mask: 0
+  valid_kwargs:
+    p_mask: 0
+  test_kwargs:
+    p_mask: 0
+  ignore_classes: []
+  class_map:
+    B: 0
+    M: 1

@@ -1,0 +1,15 @@
+defaults:
+  - baserun
+  - criterion: focal
+  - optimizer: adam
+  - metrics:
+    - roc_auc
+    - f1
+    - specificity 
+    - precision
+    - recall
+    - accuracy
+
+
+graphs:
+  threshold_curve: pr # pr (Presicion and Recall) or rs (Recall and Specificity)

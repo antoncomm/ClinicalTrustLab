@@ -1,0 +1,3 @@
+GridDropout:
+  p: 0.1
+  ratio: 0.35
