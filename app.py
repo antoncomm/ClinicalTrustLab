@@ -548,7 +548,7 @@ def build_demo() -> gr.Blocks:
 
     with gr.Blocks(
         css=css,
-        title="DICOM Model + Interpretation",
+        title="ClinicalTrustLab",
         theme=gr.themes.Origin(),
     ) as demo:
         img1_state = gr.State()
