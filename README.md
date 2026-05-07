@@ -10,6 +10,7 @@ This repository provides a PyTorch-based framework for running mammography (and 
 
 ## Table of contents
 - [Installation](#installation)
+- [Launch UI](#launch-ui)
 - [Quick start](#quick-start)
 - [Configs](#configs)
   - [Hydra basics in this repo](#hydra-basics-in-this-repo)
@@ -33,7 +34,15 @@ pip install -U pip
 pip install -e .
 ```
 
+## Launch UI
 
+The repository also includes a Gradio-based interface.
+
+### Run the Gradio app
+
+```bash
+gradio app.py
+```
 
 ## Quick start
 
